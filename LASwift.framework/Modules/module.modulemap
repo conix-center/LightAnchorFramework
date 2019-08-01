@@ -1,0 +1,11 @@
+framework module LASwift {
+  umbrella header "LASwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module LASwift.Swift {
+    header "LASwift-Swift.h"
+    requires objc
+}
