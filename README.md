@@ -12,6 +12,9 @@ To build the light anchor framework
 To use the light anchor framework 
 1.  Copy the framework file from products into a new project
 2.  build the .metallib file by running:
+
     xcrun -sdk iphoneos metal -c lightanchorkernels.metal -o lightanchorkernels.air
+    
     xcrun -sdk iphoneos metallib lightanchorkernels.air -o lightanchorkernels.metallib
+    
 3.  Copy the .metallib file into the new project
