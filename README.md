@@ -29,8 +29,8 @@ To use the light anchor framework in a new project
 1. Add 'pod "LASwift"' after the first target line in the "podfile" that was created when "pod init" was run
 1. Run "pod install"
 1. Open the white .xcworkspace file (not the blue .xcodeproj file)
-1. Copy the framework file from products into a new project    
-1. Copy the .metallib file into the new project
+1. Drag the framework file from "products" in the framework project into "frameworks" of the app project.  Select "Copy items if needed" when copying.    
+1. Drag the .metallib file into the new project.  Select "Copy items if needed" when copying.  
 1. Within xcode drag the framework from the left side into "Embedded Binaries" in the general tab of your target's settings
 1. Plug in an iOS device
 1. Select the iOS device from the drop down next to the target at the top of XCode
@@ -48,3 +48,7 @@ Implement the LightAnchorPoseManagerDelegate methods
     func lightAnchorPoseManager(_ :LightAnchorPoseManager, didUpdateResultImage resultImage: UIImage)
 }
 ```
+
+Example usage can be found here:
+
+https://github.com/conix-center/LightAnchors
