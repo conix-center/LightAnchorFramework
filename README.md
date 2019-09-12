@@ -25,7 +25,7 @@ To use the light anchor framework in a new project
 1. Create a new xcode project
 1. Quit the xcode project
 1. Navigate in a terminal to the project folder
-1. Run "pod init"
+1. Run "pod init"  Cocoapods is a package manager for iOS
 1. Add 'pod "LASwift"' after the first target line in the "podfile" that was created when "pod init" was run
 1. Run "pod install"
 1. Open the white .xcworkspace file (not the blue .xcodeproj file)
