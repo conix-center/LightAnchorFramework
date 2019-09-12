@@ -37,7 +37,9 @@ To use the light anchor framework in a new project
 1. Click the play button
 
 Create an instance of LightAnchorPoseManager
+
 Set a class to be the delegate of LightAnchorPoseManager
+
 Implement the LightAnchorPoseManagerDelegate methods 
 ```
 @objc public protocol LightAnchorPoseManagerDelegate {
