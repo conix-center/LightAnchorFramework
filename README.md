@@ -26,7 +26,7 @@ To use the light anchor framework in a new project
 1. Quit the xcode project
 1. Navigate in a terminal to the project folder
 1. Run "pod init"
-1. Add 'pod "LASwift"' to the target in the "podfile" that was created when "pod init" was run
+1. Add 'pod "LASwift"' after the first target line in the "podfile" that was created when "pod init" was run
 1. Run "pod install"
 1. Open the white .xcworkspace file (not the blue .xcodeproj file)
 1. Copy the framework file from products into a new project    
