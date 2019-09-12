@@ -17,13 +17,6 @@ import ARKit
 public let kLightData = "LightData"
 
 
-
-//let anchor1Location = SCNVector3(0,0,0)
-//let anchor2Location = SCNVector3(0,3.084,0)
-//let anchor3Location = SCNVector3(3.084,3.084,0)
-//let anchor4Location = SCNVector3(3.084,0,0)
-
-
 @objc public protocol LightAnchorPoseManagerDelegate {
     func lightAnchorPoseManager(_ :LightAnchorPoseManager, didUpdate transform: SCNMatrix4)
     func lightAnchorPoseManager(_ :LightAnchorPoseManager, didUpdatePointsFor codeIndex: Int, displayMeanX:Float, displayMeanY: Float, displayStdDevX: Float, displayStdDevY: Float)
@@ -55,8 +48,11 @@ public let kLightData = "LightData"
     var cameraIntrinsics = simd_float3x3()
     var cameraTransform = simd_float4x4()
     
+    var frameCount = 0
+    
     @objc public init(imageWidth:Int, imageHeight: Int, anchorLocations: [SCNVector3]) {
         super.init()
+        NSLog("LightAnchorPoseManager init")
         //imageSize.width = imageWidth
         //imageSize.height = imageHeight
         self.imageWidth = imageWidth
@@ -69,6 +65,17 @@ public let kLightData = "LightData"
         
         lightDecoder.initializeMetal(width: imageWidth, height: imageHeight)
         lightDecoder.delegate = self
+        
+        let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+        
+
+
+    }
+    
+    @objc func fireTimer() {
+        print("timer fired")
+        NSLog("\(self.frameCount) FPS")
+        self.frameCount = 0
     }
     
     @objc public func process(frame: ARFrame) {
@@ -84,6 +91,8 @@ public let kLightData = "LightData"
     
     
     func processPixelBuffer(_ buffer: CVPixelBuffer) {
+        
+        frameCount += 1
         //        let now = Date()
         //        let dateString = fileNameDateFormatter.string(from: now)
         //        let fileName = String(format: "%@.gray", dateString)
@@ -99,16 +108,22 @@ public let kLightData = "LightData"
         
         //            let grayPlaneHeight = 1920
         //            let grayPlaneWidth = 1440
-        var grayPlaneIndex = 0
+        var grayPlaneIndex = -1
         let planeCount = CVPixelBufferGetPlaneCount(buffer)
+        NSLog("target width: \(imageWidth), height: \(imageHeight)")
         for planeIndex in 0..<planeCount {
             let planeHeight = CVPixelBufferGetHeightOfPlane(buffer, planeIndex)
             let planeWidth = CVPixelBufferGetWidthOfPlane(buffer, planeIndex)
+            NSLog("plane width: \(planeWidth), plane height: \(planeHeight)")
             if planeWidth == imageWidth/*grayPlaneWidth*/ && planeHeight == imageHeight/*grayPlaneHeight*/ {
-                NSLog("found gray plane")
+                NSLog("found gray plane with width: \(planeWidth) height: \(planeHeight)")
                 grayPlaneIndex = planeIndex
             }
         }
+        if grayPlaneIndex == -1 {
+            NSLog("no gray plane found")
+        }
+        assert(grayPlaneIndex != -1)
         
         let numGrayBytes = imageWidth * imageHeight//grayPlaneHeight*grayPlaneWidth
         NSLog("numGrayBytes: \(numGrayBytes)")
@@ -184,6 +199,8 @@ extension LightAnchorPoseManager: LightDecoderDelegate {
             let imageMeanY = detectedPoint.meanY
             let imageStdDevX = detectedPoint.stdDevX
             let imageStdDevY = detectedPoint.stdDevY
+            
+            NSLog("imageMeanX: \(imageMeanX), imageMeanY: \(imageMeanY)")
             
             let avgStdDev = CGFloat((imageStdDevX + imageStdDevY) / 2.0)
             

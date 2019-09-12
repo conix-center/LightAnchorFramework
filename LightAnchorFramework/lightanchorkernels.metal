@@ -5,6 +5,10 @@
 //  Created by Nick Wilkerson on 2/7/19.
 //  Copyright © 2019 Wiselab. All rights reserved.
 //
+/*
+xcrun -sdk iphoneos metal -c lightanchorkernels.metal -o lightanchorkernels.air
+xcrun -sdk iphoneos metallib lightanchorkernels.air -o lightanchorkernels.metallib
+ */
 
 #include <metal_stdlib>
 #include <metal_math>

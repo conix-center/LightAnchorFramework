@@ -90,30 +90,34 @@ class LightDecoder: NSObject {
         if device == nil {
             device = MTLCreateSystemDefaultDevice()
         }
-        let libraryPath = Bundle.main.path(forResource: "kernels", ofType: "metal")
+        let libraryPath = Bundle.main.path(forResource: "lightanchorkernels", ofType: "metallib")
         NSLog("libraryPath: \(String(describing: libraryPath))")
+        assert(libraryPath != nil)
         if  let lPath = libraryPath{
             
             do {
                 if let device = self.device {
-                    try library = device.makeLibrary(source: lPath, options: nil)
+                 //   try library = device.makeLibrary(source: lPath, options: nil)
+                    try library = device.makeLibrary(filepath: lPath)
+                    NSLog("library: \(library)")
                 }
             } catch {
                 NSLog("error making a library")
             }
-        } else {
-            NSLog("Cannot find library path")
-            if let device = self.device {
-                
-                self.library = device.makeDefaultLibrary()
-                if let library = self.library {
-                    self.differenceFunction = library.makeFunction(name: "difference")
-                    self.maxFunction = library.makeFunction(name: "max")
-                    // setupMatchPreamble()
-                }
-                
-            }
         }
+//        else {
+//            NSLog("Cannot find library path")
+//            if let device = self.device {
+//
+//                self.library = device.makeDefaultLibrary()
+//                if let library = self.library {
+//                    self.differenceFunction = library.makeFunction(name: "difference")
+//                    self.maxFunction = library.makeFunction(name: "max")
+//                    // setupMatchPreamble()
+//                }
+//
+//            }
+//        }
         if let device = self.device {
             commandQueue = device.makeCommandQueue()
         }
@@ -429,7 +433,7 @@ class LightDecoder: NSObject {
     
     
     func decode(imageBytes: UnsafeRawPointer, length: Int) {
-        
+        NSLog("decode length: %d", length)
         evenFrame = !evenFrame
         
         if decoding > 0 {
@@ -446,6 +450,9 @@ class LightDecoder: NSObject {
             NSLog("no device")
             return
         }
+        let p: UnsafePointer<Int> = imageBytes.bindMemory(to: Int.self, capacity: 1)
+        let q = p[0]
+        let a = device.areProgrammableSamplePositionsSupported
         guard let imageBuffer = device.makeBuffer(bytes: imageBytes, length: length, options: .storageModeShared) else {
             NSLog("Can't create image buffer")
             return
@@ -491,6 +498,7 @@ class LightDecoder: NSObject {
     
     
     func setupMatchPreamble() {
+        NSLog("setupMatchPreamble")
         guard let library = self.library else {
             NSLog("no library")
             return
@@ -676,6 +684,7 @@ class LightDecoder: NSObject {
         
         guard let dataCodesBuffer = self.dataCodesBuffer else {
             NSLog("no data codes buffer")
+            assert(false)
             return
         }
         
@@ -899,7 +908,7 @@ class LightDecoder: NSObject {
             self.setupDilationAndErosionGPU()
             let dilatedAndErodedBuffer = dilateAndErodeGPU(inputBuffer: singleCodeMatchBuffer, width: self.width, height: self.height)
             let (meanX, meanY, stdDevX, stdDevY) = self.calculateMeanAndStdDev(from: dilatedAndErodedBuffer, width: self.width, height: self.height)
-            
+            NSLog("updateResultImage width: \(self.width) height: \(self.height)")
             
             for pixelIndex in 0..<bufferLength {
                 if dilatedAndErodedBuffer[pixelIndex] > 0x7F/*!= 0*/ {
@@ -1071,6 +1080,7 @@ class LightDecoder: NSObject {
         commandBuffer.waitUntilCompleted()
         NSLog("succesfully dilated and eroded image")
         return dilatedAndErodedBuffer.contents().assumingMemoryBound(to: UInt8.self)
+   //     return imageBuffer.contents().assumingMemoryBound(to: UInt8.self)
     }
     
     
@@ -1190,32 +1200,7 @@ class LightDecoder: NSObject {
                 numberOfPreambleMatchesOdd += 1
             }
         }
-        //        for i in 0..<100 {
-        //            NSLog("his odd 0x%x", matchArrayOdd[i])
-        //        }
-        
-        
-//        guard let minArray = self.minBuffer?.contents().assumingMemoryBound(to: UInt8.self) else {
-//            NSLog("no minArray")
-//            return
-//        }
-  //      let minImage = UIImage.image(buffer: minArray, length: self.width*self.height, rowWidth: self.width)
-        
-//        guard let maxArray = self.maxBuffer?.contents().assumingMemoryBound(to: UInt8.self) else {
-//            NSLog("no maxArray")
-//            return
-//        }
- //       let maxImage = UIImage.image(buffer: maxArray, length: self.width*self.height, rowWidth: self.width)
-        
-  //      var historyBufferImageOdd: UIImage?
-   //     var historyBufferImageEven: UIImage?
-        
-        
-        
-        
-        
-        
-        
+
         guard let matchBufferEven = self.matchBufferEven else {
             NSLog("no match buffer")
             return
@@ -1227,41 +1212,7 @@ class LightDecoder: NSObject {
                 numberOfPreambleMatchesEven += 1
             }
         }
-//        if let maxArray = self.maxBuffer?.contents().assumingMemoryBound(to: UInt8.self), let minArray = self.minBuffer?.contents().assumingMemoryBound(to: UInt8.self) {
-//            for i in 0..<100 {
-//                //      NSLog("max: %d", maxArray[i])
-//            }
-//            for i in 0..<100 {
-//                //       NSLog("min: %d", minArray[i])
-//            }
-//        }
-        
-        
-        
-//        var matchImageOdd: UIImage?
-//        var matchImageEven: UIImage?
-//        if let matchArrayOdd = self.matchBufferOdd?.contents().assumingMemoryBound(to: UInt8.self) {
-////            var matchImageArrayOdd = UnsafeMutablePointer<UInt8>.allocate(capacity: length)
-//            for i in 0..<length {
-//                if matchArrayOdd[i] != 0 {
-//                    matchImageArrayOdd[i] = 0xFF
-//                }
-//            }
-//            matchImageOdd = UIImage.image(buffer: matchImageArrayOdd, length: length, rowWidth: self.width)
-//        }
-        
-//        if let matchArrayEven = self.matchBufferEven?.contents().assumingMemoryBound(to: UInt8.self) {
-////            var matchImageArrayEven = UnsafeMutablePointer<UInt8>.allocate(capacity: length)
-//            for i in 0..<length {
-//                if matchArrayEven[i] != 0 {
-//                    matchImageArrayEven[i] = 0xFF
-//                }
-//            }
-//            matchImageEven = UIImage.image(buffer: matchImageArrayEven, length: length, rowWidth: self.width)
-//        }
-        
-//        var dataImageOdd: UIImage?
-//        var dataImageEven: UIImage?
+
         
         guard let dataArrayOdd = self.dataBufferOdd?.contents().assumingMemoryBound(to: UInt8.self) else {
             NSLog("no dataArrayOdd")

@@ -13,7 +13,7 @@
 		5B936B7222F22F1F0034E0D3 /* LightAnchorPoseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B936B7122F22F1F0034E0D3 /* LightAnchorPoseManager.swift */; };
 		5B936B7422F22F380034E0D3 /* PoseSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B936B7322F22F380034E0D3 /* PoseSolver.swift */; };
 		5B936B7622F22F4D0034E0D3 /* LightDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B936B7522F22F4D0034E0D3 /* LightDecoder.swift */; };
-		5B936B7822F22F6A0034E0D3 /* kernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5B936B7722F22F6A0034E0D3 /* kernels.metal */; };
+		5B936B7822F22F6A0034E0D3 /* lightanchorkernels.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5B936B7722F22F6A0034E0D3 /* lightanchorkernels.metal */; };
 		5B936B7A22F22F880034E0D3 /* LightAnchorBleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B936B7922F22F880034E0D3 /* LightAnchorBleManager.swift */; };
 		5B936B7C22F22F9D0034E0D3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B936B7B22F22F9D0034E0D3 /* Extensions.swift */; };
 		5B936B8022F22FBC0034E0D3 /* quartic_real.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B936B7E22F22FBC0034E0D3 /* quartic_real.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -41,7 +41,7 @@
 		5B936B7122F22F1F0034E0D3 /* LightAnchorPoseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightAnchorPoseManager.swift; sourceTree = "<group>"; };
 		5B936B7322F22F380034E0D3 /* PoseSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseSolver.swift; sourceTree = "<group>"; };
 		5B936B7522F22F4D0034E0D3 /* LightDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightDecoder.swift; sourceTree = "<group>"; };
-		5B936B7722F22F6A0034E0D3 /* kernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = kernels.metal; sourceTree = "<group>"; };
+		5B936B7722F22F6A0034E0D3 /* lightanchorkernels.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = lightanchorkernels.metal; sourceTree = "<group>"; };
 		5B936B7922F22F880034E0D3 /* LightAnchorBleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightAnchorBleManager.swift; sourceTree = "<group>"; };
 		5B936B7B22F22F9D0034E0D3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5B936B7E22F22FBC0034E0D3 /* quartic_real.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quartic_real.h; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 				5B936B7122F22F1F0034E0D3 /* LightAnchorPoseManager.swift */,
 				5B936B7322F22F380034E0D3 /* PoseSolver.swift */,
 				5B936B7522F22F4D0034E0D3 /* LightDecoder.swift */,
-				5B936B7722F22F6A0034E0D3 /* kernels.metal */,
+				5B936B7722F22F6A0034E0D3 /* lightanchorkernels.metal */,
 				5B936B7922F22F880034E0D3 /* LightAnchorBleManager.swift */,
 				5B936B7B22F22F9D0034E0D3 /* Extensions.swift */,
 				5B936B7D22F22FA90034E0D3 /* Quartic */,
@@ -247,7 +247,7 @@
 				5B936B7C22F22F9D0034E0D3 /* Extensions.swift in Sources */,
 				5B936B7222F22F1F0034E0D3 /* LightAnchorPoseManager.swift in Sources */,
 				5B936B7622F22F4D0034E0D3 /* LightDecoder.swift in Sources */,
-				5B936B7822F22F6A0034E0D3 /* kernels.metal in Sources */,
+				5B936B7822F22F6A0034E0D3 /* lightanchorkernels.metal in Sources */,
 				5B936B7422F22F380034E0D3 /* PoseSolver.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
