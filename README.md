@@ -3,9 +3,6 @@
 To build the light anchor framework
 
 1. Clone this repository
-2. Install Cocoapods using "sudo gem install cocoapods"
-3. Run "pod install" in the directory of this repository
-4. Open the white .xcworkspace file (not the blue .xcodeproj file)
 5. Build the project by clicking the play button
 
 To build the metallib file
