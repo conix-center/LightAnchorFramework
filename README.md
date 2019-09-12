@@ -2,9 +2,10 @@
 
 To build the light anchor framework
 
+1. Install XCode
 1. Clone this repository
 1. Open the .xcodeproj file
-5. Build the project by clicking the play button
+5. Build the project by clicking the play button in xcode
 
 To build the metallib file
 
