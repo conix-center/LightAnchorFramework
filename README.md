@@ -30,6 +30,8 @@ To use the light anchor framework in a new project
 1. Copy the framework file from products into a new project    
 1. Copy the .metallib file into the new project
 1. Within xcode drag the framework from the left side into "Embedded Binaries" in the general tab of your target's settings
+1. Plug in an iOS device
+1. Select the iOS device from the drop down next to the target at the top of XCode
 1. Click the play button
 
 Create an instance of LightAnchorPoseManager
