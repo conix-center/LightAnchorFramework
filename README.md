@@ -33,3 +33,12 @@ To use the light anchor framework in a new project
 1. Within xcode drag the framework from the left side into "Embedded Binaries" in the general tab of your target's settings
 1. Click the play button
 
+Create an instance of LightAnchorPoseManager
+Set a class to be the delegate of LightAnchorPoseManager
+Implement the LightAnchorPoseManagerDelegate methods 
+
+@objc public protocol LightAnchorPoseManagerDelegate {
+    func lightAnchorPoseManager(_ :LightAnchorPoseManager, didUpdate transform: SCNMatrix4)
+    func lightAnchorPoseManager(_ :LightAnchorPoseManager, didUpdatePointsFor codeIndex: Int, displayMeanX:Float, displayMeanY: Float, displayStdDevX: Float, displayStdDevY: Float)
+    func lightAnchorPoseManager(_ :LightAnchorPoseManager, didUpdateResultImage resultImage: UIImage)
+}
