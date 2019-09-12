@@ -36,9 +36,10 @@ To use the light anchor framework in a new project
 Create an instance of LightAnchorPoseManager
 Set a class to be the delegate of LightAnchorPoseManager
 Implement the LightAnchorPoseManagerDelegate methods 
-
+`
 @objc public protocol LightAnchorPoseManagerDelegate {
     func lightAnchorPoseManager(_ :LightAnchorPoseManager, didUpdate transform: SCNMatrix4)
     func lightAnchorPoseManager(_ :LightAnchorPoseManager, didUpdatePointsFor codeIndex: Int, displayMeanX:Float, displayMeanY: Float, displayStdDevX: Float, displayStdDevY: Float)
     func lightAnchorPoseManager(_ :LightAnchorPoseManager, didUpdateResultImage resultImage: UIImage)
 }
+`
