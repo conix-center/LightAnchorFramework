@@ -2,7 +2,7 @@
 
 To build the light anchor framework
 
-1. Install XCode
+1. Install XCode from the App Store
 1. Clone this repository
 1. Open the .xcodeproj file
 5. Build the project by clicking the play button in xcode
