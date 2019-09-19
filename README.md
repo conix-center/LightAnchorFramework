@@ -35,6 +35,7 @@
 
 1. Drag the .metallib file into the new project.  Select "Copy items if needed" when copying.  
 1. Within xcode drag the framework from the left side into "Embedded Binaries" in the general tab of your target's settings
+![alt text](https://user-images.githubusercontent.com/1314217/65280440-57237280-dafe-11e9-99ca-f413e736a458.png "Embedded Binaries")
 1. Plug in an iOS device
 1. Select the iOS device from the drop down next to the target at the top of XCode
 1. Click the play button
