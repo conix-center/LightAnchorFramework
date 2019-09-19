@@ -1,6 +1,6 @@
 # LightAnchorFramework
 
-##To build the light anchor framework
+## To build the light anchor framework
 
 1. Install XCode from the App Store
 1. Clone this repository
@@ -9,7 +9,7 @@
 1. Select the iOS device from the drop down next to the target at the top of XCode
 1. Build the project by clicking the play button in xcode
 
-##To build the metallib file
+## To build the metallib file
 
 1. Navigate to the folder containing the .metal file
 1. Run
@@ -19,7 +19,7 @@
     xcrun -sdk iphoneos metallib lightanchorkernels.air -o lightanchorkernels.metallib
 
 
-##To use the light anchor framework in a new project
+## To use the light anchor framework in a new project
 
 1. Install cocoapods by running "sudo gem install cocoapods" in the terminal
 1. Create a new xcode project
