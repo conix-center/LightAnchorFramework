@@ -29,7 +29,9 @@
 1. Add 'pod "LASwift"' after the first target line in the "podfile" that was created when "pod init" was run
 1. Run "pod install"
 1. Open the white .xcworkspace file (not the blue .xcodeproj file)
-1. Drag the framework file from "products" in the framework project into "frameworks" of the app project.  Select "Copy items if needed" when copying.    
+1. Drag the framework file from "products" in the framework project into "frameworks" of the app project.  Select "Copy items if needed" when copying. 
+![alt text](https://user-images.githubusercontent.com/1314217/65280116-b2089a00-dafd-11e9-885b-50df0be5d6af.png "Products")
+
 1. Drag the .metallib file into the new project.  Select "Copy items if needed" when copying.  
 1. Within xcode drag the framework from the left side into "Embedded Binaries" in the general tab of your target's settings
 1. Plug in an iOS device
