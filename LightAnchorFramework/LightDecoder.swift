@@ -20,10 +20,10 @@ struct LightDecoderDetectedPoint {
     var stdDevY: Float
 }
 
+/* these codes represent the blink battern of the led */
 let  dataCodesArray: [UInt16] = [0xA95,0xB6D,0xD6B,0xC93];
 
 protocol LightDecoderDelegate {
-    
     func lightDecoder(_ :LightDecoder, didUpdateResultImage resultImage: UIImage)
     func lightDecoder(_ :LightDecoder, didUpdate detectedPoints: [LightDecoderDetectedPoint])
 }
