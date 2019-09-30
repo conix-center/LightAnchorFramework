@@ -93,13 +93,13 @@ public let kLightData = "LightData"
 
         var grayPlaneIndex = -1
         let planeCount = CVPixelBufferGetPlaneCount(buffer)
-        NSLog("target width: \(imageWidth), height: \(imageHeight)")
+    //    NSLog("target width: \(imageWidth), height: \(imageHeight)")
         for planeIndex in 0..<planeCount {
             let planeHeight = CVPixelBufferGetHeightOfPlane(buffer, planeIndex)
             let planeWidth = CVPixelBufferGetWidthOfPlane(buffer, planeIndex)
-            NSLog("plane width: \(planeWidth), plane height: \(planeHeight)")
+           // NSLog("plane width: \(planeWidth), plane height: \(planeHeight)")
             if planeWidth == imageWidth/*grayPlaneWidth*/ && planeHeight == imageHeight {
-                NSLog("found gray plane with width: \(planeWidth) height: \(planeHeight)")
+              //  NSLog("found gray plane with width: \(planeWidth) height: \(planeHeight)")
                 grayPlaneIndex = planeIndex
             }
         }
@@ -109,7 +109,7 @@ public let kLightData = "LightData"
         assert(grayPlaneIndex != -1)
         
         let numGrayBytes = imageWidth * imageHeight
-        NSLog("numGrayBytes: \(numGrayBytes)")
+    //    NSLog("numGrayBytes: \(numGrayBytes)")
         CVPixelBufferLockBaseAddress(buffer, .readOnly)
         
         if let baseAddressGray = CVPixelBufferGetBaseAddressOfPlane(buffer, grayPlaneIndex) {

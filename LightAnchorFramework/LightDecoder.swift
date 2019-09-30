@@ -433,7 +433,7 @@ class LightDecoder: NSObject {
     
     
     func decode(imageBytes: UnsafeRawPointer, length: Int) {
-        NSLog("decode length: %d", length)
+     //   NSLog("decode length: %d", length)
         evenFrame = !evenFrame
         
         if decoding > 0 {

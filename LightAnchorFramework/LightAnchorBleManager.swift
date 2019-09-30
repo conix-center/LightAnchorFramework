@@ -114,6 +114,24 @@ extension LightAnchorBleManager: CBCentralManagerDelegate {
         if let pName = peripheral.name {
             if pName == "LightAnchor" || pName == "Light Anchor" {
                 NSLog("Found a Light Anchor")
+                for key in advertisementData.keys {
+                    NSLog("key: \(key)")
+                    if key == "kCBAdvDataManufacturerData" {
+                        NSLog("found manufacturer data")
+                        let mData = advertisementData[key]
+                        NSLog("mData: \(mData)")
+                        let d = mData as! Data
+                        NSLog("d: \(d)")
+                        NSLog("d[0]: \(d[0])")
+                        var id = 0
+                        for i in stride(from: 5, through: 2, by: -1) {
+                            id *= 255
+                            id += Int(d[i])
+                        }
+                        NSLog("id: \(id)")
+                        
+                    }
+                }
                 lightAnchors.append(peripheral)
                 
                 self.delegate?.lightAnchorManager(bleManager: self, didDiscoverLightAnchorIdentifiedBy: 0)
