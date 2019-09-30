@@ -29,7 +29,9 @@ public let kLightData = "LightData"
     /* encapsulated classes */
     let lightDecoder = LightDecoder()
     let poseSolver = PoseSolver()
-    let lightAnchorBleManager = LightAnchorBleManager()
+    
+    var lightAnchorBleManager: LightAnchorBleManager
+    let beaconManager = BeaconManager()
     
     var blinkTimer: Timer?
     
@@ -40,7 +42,6 @@ public let kLightData = "LightData"
     //@objc public var imageSize = ImageSize(width: 0, height: 0)
     @objc public var imageWidth = 0
     @objc public var imageHeight = 0
-    @objc public var anchorLocations = [SCNVector3]()
     
     /* temporary data */
     var cameraIntrinsics = simd_float3x3()
@@ -48,14 +49,15 @@ public let kLightData = "LightData"
     
     var frameCount = 0
     
-    @objc public init(imageWidth:Int, imageHeight: Int, anchorLocations: [SCNVector3]) {
+    @objc public init(imageWidth:Int, imageHeight: Int) {
+        lightAnchorBleManager = LightAnchorBleManager(beaconManager: beaconManager)
         super.init()
         NSLog("LightAnchorPoseManager init")
 
         self.imageWidth = imageWidth
         self.imageHeight = imageHeight
         
-        self.anchorLocations = anchorLocations
+
         
         lightAnchorBleManager.delegate = self
         lightAnchorBleManager.scanForLightAnchors()
@@ -192,8 +194,19 @@ extension LightAnchorPoseManager: LightDecoderDelegate {
             if avgStdDev > 150 {
                 
             } else {
-                if codeIndex-1 < anchorLocations.count {
-                    anchorPoints.append(AnchorPoint(location3d: anchorLocations[codeIndex-1], location2d: CGPoint(x: CGFloat(imageMeanX), y: CGFloat(imageMeanY))))
+//                if codeIndex-1 < anchorLocations.count {
+//                    anchorPoints.append(AnchorPoint(location3d: anchorLocations[codeIndex-1], location2d: CGPoint(x: CGFloat(imageMeanX), y: CGFloat(imageMeanY))))
+//                }
+                var location3d: SCNVector3?
+                for beacon in beaconManager.beaconsIdDict.values {
+                    if beacon.code == codeIndex {
+                        location3d = SCNVector3(beacon.x, beacon.y, beacon.z)
+                        break
+                    }
+                }
+                
+                if let loc = location3d {
+                    anchorPoints.append(AnchorPoint(location3d: loc, location2d: CGPoint(x: CGFloat(imageMeanX), y: CGFloat(imageMeanY))))
                 }
             }
         }

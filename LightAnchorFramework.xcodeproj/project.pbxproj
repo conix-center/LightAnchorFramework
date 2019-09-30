@@ -19,6 +19,7 @@
 		5B936B8022F22FBC0034E0D3 /* quartic_real.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B936B7E22F22FBC0034E0D3 /* quartic_real.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B936B8122F22FBC0034E0D3 /* quartic_real.c in Sources */ = {isa = PBXBuildFile; fileRef = 5B936B7F22F22FBC0034E0D3 /* quartic_real.c */; };
 		5B936B8622F2300E0034E0D3 /* LASwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B936B8522F2300E0034E0D3 /* LASwift.framework */; };
+		5BF6694E23424E7900D25E7D /* BeaconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF6694D23424E7900D25E7D /* BeaconManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		5B936B7F22F22FBC0034E0D3 /* quartic_real.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = quartic_real.c; sourceTree = "<group>"; };
 		5B936B8522F2300E0034E0D3 /* LASwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LASwift.framework; sourceTree = "<group>"; };
 		5B936B8822F230C10034E0D3 /* LightAnchor-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LightAnchor-Bridging-Header.h"; sourceTree = "<group>"; };
+		5BF6694D23424E7900D25E7D /* BeaconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeaconManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				5B936B7522F22F4D0034E0D3 /* LightDecoder.swift */,
 				5B936B7722F22F6A0034E0D3 /* lightanchorkernels.metal */,
 				5B936B7922F22F880034E0D3 /* LightAnchorBleManager.swift */,
+				5BF6694D23424E7900D25E7D /* BeaconManager.swift */,
 				5B936B7B22F22F9D0034E0D3 /* Extensions.swift */,
 				5B936B7D22F22FA90034E0D3 /* Quartic */,
 				5B936B5B22F22EF70034E0D3 /* Info.plist */,
@@ -243,6 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B936B8122F22FBC0034E0D3 /* quartic_real.c in Sources */,
+				5BF6694E23424E7900D25E7D /* BeaconManager.swift in Sources */,
 				5B936B7A22F22F880034E0D3 /* LightAnchorBleManager.swift in Sources */,
 				5B936B7C22F22F9D0034E0D3 /* Extensions.swift in Sources */,
 				5B936B7222F22F1F0034E0D3 /* LightAnchorPoseManager.swift in Sources */,

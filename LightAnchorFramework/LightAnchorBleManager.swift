@@ -26,9 +26,10 @@ class LightAnchorBleManager: NSObject {
     let lightIdServiceUUID             = CBUUID(string: "F0001170-0451-4000-B000-000000000000")
     let lightIdCharacteristicUUID      = CBUUID(string: "F0001111-0451-4000-B000-000000000000")
     
+    var beaconManager: BeaconManager
     
-    
-    override init() {
+    init(beaconManager: BeaconManager) {
+        self.beaconManager = beaconManager
         super.init()
         self.bleManager = CBCentralManager(delegate: self, queue: nil)
     }
@@ -129,6 +130,7 @@ extension LightAnchorBleManager: CBCentralManagerDelegate {
                             id += Int(d[i])
                         }
                         NSLog("id: \(id)")
+                        beaconManager.updateBeacons(with: id)
                         
                     }
                 }
