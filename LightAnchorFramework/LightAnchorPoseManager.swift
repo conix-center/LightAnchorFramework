@@ -31,7 +31,7 @@ public let kLightData = "LightData"
     let poseSolver = PoseSolver()
     
     var lightAnchorBleManager: LightAnchorBleManager
-    let beaconManager = BeaconManager()
+    public let beaconManager = BeaconManager()
     
     var blinkTimer: Timer?
     
@@ -88,7 +88,9 @@ public let kLightData = "LightData"
         
     }
     
-    
+    /*
+     *  Called every time ARKit receives a frame by the application
+     */
     func processPixelBuffer(_ buffer: CVPixelBuffer) {
         
         frameCount += 1
@@ -100,6 +102,7 @@ public let kLightData = "LightData"
             let planeHeight = CVPixelBufferGetHeightOfPlane(buffer, planeIndex)
             let planeWidth = CVPixelBufferGetWidthOfPlane(buffer, planeIndex)
            // NSLog("plane width: \(planeWidth), plane height: \(planeHeight)")
+            /* extracting the gray plane based on the plane size */
             if planeWidth == imageWidth/*grayPlaneWidth*/ && planeHeight == imageHeight {
               //  NSLog("found gray plane with width: \(planeWidth) height: \(planeHeight)")
                 grayPlaneIndex = planeIndex
@@ -179,6 +182,7 @@ extension LightAnchorPoseManager: LightDecoderDelegate {
             var displayStdDevX = Float(0.0)
             var displayStdDevY = Float(0.0)
             
+            /* rotates values to portrait for display if the device is in portrait */
             if UIDevice.current.orientation == .portrait || UIDevice.current.orientation == .portraitUpsideDown {
                 (displayMeanX, displayMeanY, displayStdDevX, displayStdDevY) = lightDecoder.rotateToPortrait(initialWidth: Float(UIScreen.main.bounds.size.width), initialHeight: Float(UIScreen.main.bounds.size.height), meanX: imageMeanX, meanY: imageMeanY, stdDevX: imageStdDevX, stdDevY: imageStdDevY)
             } else {
@@ -191,9 +195,9 @@ extension LightAnchorPoseManager: LightDecoderDelegate {
                 }
             }
             
-            if avgStdDev > 150 {
-                
-            } else {
+            /* if the standard deviation is greater than x ignore it */
+            /* only consider small cluster */
+            if avgStdDev <= 150 {
 //                if codeIndex-1 < anchorLocations.count {
 //                    anchorPoints.append(AnchorPoint(location3d: anchorLocations[codeIndex-1], location2d: CGPoint(x: CGFloat(imageMeanX), y: CGFloat(imageMeanY))))
 //                }
@@ -211,13 +215,14 @@ extension LightAnchorPoseManager: LightDecoderDelegate {
             }
         }
 
-        
+        /* only computes transform if 3 beacons are found */
         if anchorPoints.count >= 3 {
             
             let ct = simd_double4x4(cameraTransform)
             let ci = simd_double3x3(cameraIntrinsics)
             
             poseSolver.solveForPose(intrinsics: ci, cameraTransform: ct, anchorPoints: anchorPoints) { (transform, success) in
+                /* rejects transform if it is invalid otherwise passes to delegate */
                 NSLog("transform success: %@", success ? "true" : "false")
                 var validTransform = true
                 for i in 0..<4 {

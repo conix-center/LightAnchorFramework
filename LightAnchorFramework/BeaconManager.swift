@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Beacon {
+public struct Beacon {
     var id: Int
     var code: Int
     var x: Int
@@ -16,9 +16,9 @@ struct Beacon {
     var z: Int
 }
 
-class BeaconManager: NSObject {
+public class BeaconManager: NSObject {
 
-    var beaconsIdDict = Dictionary<Int, Beacon>()
+    public var beaconsIdDict = Dictionary<Int, Beacon>()
     
     let baseAtlasURL = URL(string: "https://xr.andrew.cmu.edu/beacon/local/")!
     

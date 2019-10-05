@@ -6,7 +6,8 @@
 //  Copyright © 2019 Wiselab. All rights reserved.
 //
 
-import UIKit
+//import UIKit
+import Foundation
 import CoreBluetooth
 
 protocol LightAnchorBleManagerDelegate {
@@ -21,6 +22,7 @@ class LightAnchorBleManager: NSObject {
     /* bluetooth */
     var bleManager:CBCentralManager?
     var lightAnchors = [CBPeripheral]()
+    /* service IDs are important and have to be these to be detected by a rewgular phone BLE stack */
     let lightTriggerServiceUUID =        CBUUID(string: "F0001180-0451-4000-B000-000000000000")
     let lightTriggerCharacteristicUUID = CBUUID(string: "F0001112-0451-4000-B000-000000000000")
     let lightIdServiceUUID             = CBUUID(string: "F0001170-0451-4000-B000-000000000000")

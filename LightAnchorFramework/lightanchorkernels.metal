@@ -63,8 +63,8 @@ kernel void matchPreamble(
                           const device uchar4 *prevImage17 [[ buffer(25) ]],
                           const device uchar4 *prevImage18 [[ buffer(26) ]],
                           const device uchar4 *prevImage19 [[ buffer(27) ]],
-                          
-                          uint id [[ thread_position_in_grid ]]
+                     
+                          uint id [[ thread_position_in_grid ]]  /* passed by metal as the id of the thread */
                           ) {
     /* preamble detector */
     if (matchBuffer[id][0] == 0 && matchBuffer[id][1] == 0 && matchBuffer[id][2] == 0 && matchBuffer[id][3] == 0) {
@@ -97,22 +97,29 @@ kernel void matchPreamble(
         /* looking at previous images and current images means that the first bit of data we are looking for must be 1 */
         uchar4 minValue = min(0xFF, image[id]);
         uchar4 maxValue = max(0, image[id]);
+        /* calculating the per pixel minimum and maximum of the last 12 frames */
         for (int i = 0; i<12; i++) {
             uchar4 buffer = imageBuffers[i];
             minValue = min(minValue, buffer);
             maxValue = max(maxValue, buffer);
         }
+        /* threshold is the average of the minimum and maximum of the last 12 frames */
         uchar4 thresh = (uchar4)(((ushort4)maxValue+(ushort4)minValue)/2);
-        
+        /* bit is 1 if value is greater than the threshold */
         ushort4 bit = (ushort4)(image[id] > thresh);
         
+        /* stores 0 and 1 values of the last 12 frames */
         actualDataBuffer[id] = (actualDataBuffer[id] << 1) | bit;
+        /* makes sure only 12 frames are being compared 0x0FFF is 12 ones */
         ushort4 restrictedActualData = actualDataBuffer[id] & 0x0FFF;
         //  ushort4 restrictedActualData = actualDataBuffer[id];
+        /* uint4 for 32 codes */
         uint4 matches = 0;
         for (int i=0; i<NUM_DATA_CODES; i++) {
             ushort dataCode = dataCodesBuffer[i];
+            /* doing actual comparison */
             uint4 match = (uint4)((restrictedActualData ^ dataCode) == 0);
+            /* adds matches for each code (flags for adwait) */
             matches = matches | (match << i);
         }
         
@@ -124,8 +131,14 @@ kernel void matchPreamble(
                 baselineMinValue = min(baselineMinValue, buffer);
                 baselineMaxValue = max(baselineMaxValue, buffer);
             }
+            /* thresholding on snr */
+            /* half precision floating point */
+            /* matches are accepted if they cross the snr threshold and match a pattern
+             * pattern matching is done above but we check for snr separately here
+             * pixels which cross the snr threshold have their mask bits set to 1
+             */
             half4 snr = (half4)(maxValue-minValue)/ (half4)(baselineMaxValue-baselineMinValue);
-            uint4 acceptMask = (uint4)(snr > SNR_THRESHOLD) * 0xFFFFFFFF;
+            uint4 acceptMask = (uint4)(snr > SNR_THRESHOLD) * 0xFFFFFFFF; /* converts 1 one to 32 ones */
             uint4 acceptedMatches = matches & acceptMask;
             matchBuffer[id] = acceptedMatches;
         }

@@ -5,10 +5,11 @@
 //  Created by Nick Wilkerson on 6/13/19.
 //
 
-import UIKit
+import Foundation//UIKit
 import Accelerate
-import ARKit
+import ARKit /* uses arkit for the variable types doesn't use arkit functions */
 import LASwift
+
 
 struct AnchorPoint {
     var location3d: SCNVector3
@@ -225,7 +226,9 @@ class PoseSolver: NSObject {
         }
     }
     
-    
+    /*
+     convert: makes sure all the coordinate systems have the same handedness
+     */
     func convert(matrix: simd_double3x3) -> simd_double4x4 {
         var outMatrix = simd_double4x4()
         outMatrix.columns.0.x = matrix.columns.0.x
